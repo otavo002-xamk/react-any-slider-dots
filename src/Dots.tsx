@@ -6,6 +6,9 @@ interface IProps extends IReactAnySliderBaseProps {
     visibleDotsCount?: number
     dotSize?: number
     dotGap?: number
+    handleClick?: any
+    handleMouseOver?: any
+    handleMouseOut?: any
 }
 
 const makeDotClassName = (isBigDot: boolean, isActiveDot: boolean) =>
@@ -19,6 +22,9 @@ const ReactAnySliderDots: React.FC<IProps> = ({
     visibleDotsCount = 5,
     dotGap = 4,
     dotSize = 6,
+    handleClick = () => {},
+    handleMouseOver = () => {},
+    handleMouseOut = () => {},
 }) => {
     const contentRef = useRef<HTMLDivElement>(null)
     const [visibleDotsIndexes, setVisibleDotsIndexes] = useState({ left: 0, right: visibleDotsCount - 1 })
@@ -59,6 +65,10 @@ const ReactAnySliderDots: React.FC<IProps> = ({
                     .map((_, index) => (
                         <div
                             key={index}
+                            id={`sliderdot${index}`}
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
+                            onClick={handleClick}
                             className={makeDotClassName(
                                 index === 0 ||
                                     index === dotsCount - 1 ||
